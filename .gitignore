@@ -1,0 +1,9 @@
+.env
+/vendor/
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/geo/*.mmdb
+!/storage/geo/.gitkeep
+.DS_Store

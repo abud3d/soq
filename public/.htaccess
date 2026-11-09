@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+# public هو الجزء الوحيد المفترض كشفه للويب.
+RewriteRule ^ad/media/([a-f0-9]{40}\.webp)$ ad/media.php?f=$1 [QSA,L]
+<FilesMatch "^\.">
+ Require all denied
+</FilesMatch>
