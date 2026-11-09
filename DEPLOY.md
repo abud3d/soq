@@ -1,19 +1,31 @@
-# نشر NSHIR بجانب WordPress
+# رفع NSHIR التجريبي بجانب WordPress
 
-GeoLite2: `/home/arbim/nshir.com/storage/geo/GeoLite2-City.mmdb`
-وفي `.env`: `GEOIP_DB=/home/arbim/nshir.com/storage/geo/GeoLite2-City.mmdb`
+## لا تحذف WordPress الآن
+اترك `index.php` وملفات WordPress كما هي. نقطة دخول NSHIR هي `index2.php` فقط، والنسخة التجريبية تحمل `noindex,nofollow`.
 
-## وضع التجربة
-نقطة دخول NSHIR المؤقتة: `public/index2.php`.
-لا تغيّر `DirectoryIndex` ولا rewrite الخاص بـ WordPress الآن.
+## المتطلبات
+PHP 8.2+ مع: PDO MySQL, mbstring, fileinfo, GD مع WebP. Composer متاح على السيرفر.
 
-## تثبيت
+GeoLite2:
+`storage/geo/GeoLite2-City.mmdb`
+
+## الإعداد
+انسخ `.env.example` إلى `.env` وعدّل قاعدة البيانات وAPP_URL. ثم:
 ```bash
 composer install --no-dev --optimize-autoloader
-mysql nshir < database/schema.sql
-mysql nshir < database/migrations/002_geo_ids.sql
-mysql nshir < database/migrations/003_auth_notifications.sql
+mysql -u USER -p DATABASE < database/schema.sql
+mysql -u USER -p DATABASE < database/migrations/002_geo_ids.sql
+mysql -u USER -p DATABASE < database/migrations/003_auth_notifications.sql
+mysql -u USER -p DATABASE < database/seed.sql
+mkdir -p storage/uploads storage/geo
+chmod 750 storage storage/uploads storage/geo
 ```
 
+## اختبار
+افتح `https://nshir.com/index2.php`.
+اختبر التسجيل، وصول رسالة التفعيل، الدخول، النشر مع صورة، فتح الصورة، التعليق، الإشعار، واستعادة كلمة المرور.
+
+إذا لم تصل الرسائل، فدالة PHP mail غير مهيأة في الاستضافة ويجب ربط SMTP قبل الإطلاق العام.
+
 ## الانتقال النهائي
-بعد اعتماد النسخة: خذ نسخة احتياطية من WordPress وقاعدته و.htaccess، ثم اجعل NSHIR هو index.php وفعّل rewrite الخاص به. احتفظ بنسخة WordPress للرجوع السريع ولا تحذفه في لحظة التحويل نفسها.
+بعد الاعتماد فقط: نسخة احتياطية من WordPress وقاعدته و.htaccess، تحويل front controller إلى NSHIR، تفعيل الروابط النظيفة وSEO/sitemap، ثم إبقاء نسخة WordPress للرجوع قبل حذفه لاحقًا.
