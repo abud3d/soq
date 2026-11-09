@@ -1,9 +1,8 @@
 Options -Indexes
 RewriteEngine On
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
+# وضع تجريبي بجانب WordPress. لا يوجد rewrite عام إلى NSHIR بعد.
+RewriteRule ^nshir-sitemap\.xml$ sitemap.php [L]
+RewriteRule ^nshir-media/([a-f0-9]{40}\.webp)$ media.php?f=$1 [QSA,L]
 <FilesMatch "^\.">
-  Require all denied
+ Require all denied
 </FilesMatch>
