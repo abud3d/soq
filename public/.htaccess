@@ -1,8 +1,7 @@
 Options -Indexes
 RewriteEngine On
-# وضع تجريبي بجانب WordPress. لا يوجد rewrite عام إلى NSHIR بعد.
-RewriteRule ^nshir-sitemap\.xml$ sitemap.php [L]
-RewriteRule ^nshir-media/([a-f0-9]{40}\.webp)$ media.php?f=$1 [QSA,L]
+# public هو الجزء الوحيد المفترض كشفه للويب.
+RewriteRule ^ad/media/([a-f0-9]{40}\.webp)$ ad/media.php?f=$1 [QSA,L]
 <FilesMatch "^\.">
  Require all denied
 </FilesMatch>
