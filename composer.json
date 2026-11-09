@@ -1,0 +1,8 @@
+{
+  "name": "nshir/classifieds",
+  "description": "NSHIR lightweight Arabic classifieds",
+  "type": "project",
+  "require": {"php": "^8.2"},
+  "autoload": {"psr-4": {"Nshir\\": "src/"}},
+  "config": {"sort-packages": true}
+}
